@@ -7,11 +7,11 @@ import (
 
 type Error struct {
 	// 错误码
-	code int `json:"code"`
+	code int
 	// 错误消息
-	msg string `json:"msg"`
+	msg string
 	// 详细信息
-	details []string `json:"details"`
+	details []string
 }
 
 var codes = map[int]string{}
@@ -47,9 +47,7 @@ func (e *Error) Details() []string {
 func (e *Error) WithDetails(details ...string) *Error {
 	newError := *e
 	newError.details = []string{}
-	for _, d := range details {
-		newError.details = append(newError.details, d)
-	}
+	newError.details = append(newError.details, details...)
 
 	return &newError
 }
@@ -62,6 +60,8 @@ func (e *Error) StatusCode() int {
 		return http.StatusInternalServerError
 	case InvalidParams.Code():
 		return http.StatusBadRequest
+	case NotFound.Code():
+		return http.StatusNotFound
 	case UnauthorizedAuthNotExist.Code():
 		fallthrough
 	case UnauthorizedTokenError.Code():
