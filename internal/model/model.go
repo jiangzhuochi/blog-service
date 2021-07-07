@@ -27,14 +27,17 @@ type Model struct {
 }
 
 func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
-	db, err := gorm.Open(databaseSetting.DBType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local",
-		databaseSetting.UserName,
-		databaseSetting.Password,
-		databaseSetting.Host,
-		databaseSetting.DBName,
-		databaseSetting.Charset,
-		databaseSetting.ParseTime,
-	))
+	db, err := gorm.Open(
+		databaseSetting.DBType,
+		fmt.Sprintf(
+			"%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local",
+			databaseSetting.UserName,
+			databaseSetting.Password,
+			databaseSetting.Host,
+			databaseSetting.DBName,
+			databaseSetting.Charset,
+			databaseSetting.ParseTime,
+		))
 	if err != nil {
 		return nil, err
 	}

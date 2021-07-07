@@ -121,14 +121,13 @@ func (l *Logger) WithTrace() *Logger {
 func (l *Logger) JSONFormat(level Level, message string) map[string]interface{} {
 	data := make(Fields, len(l.fields)+4)
 	data["level"] = level.String()
-	data["time"] = time.Now().Local().UnixNano()
+	data["time"] = time.Now().UnixNano()
 	data["message"] = message
 	data["callers"] = l.callers
-	if len(l.fields) > 0 {
-		for k, v := range l.fields {
-			if _, ok := data[k]; !ok {
-				data[k] = v
-			}
+
+	for k, v := range l.fields {
+		if _, ok := data[k]; !ok {
+			data[k] = v
 		}
 	}
 
@@ -136,21 +135,16 @@ func (l *Logger) JSONFormat(level Level, message string) map[string]interface{} 
 }
 
 func (l *Logger) Output(level Level, message string) {
-	body, _ := json.Marshal(l.JSONFormat(level, message))
+	ll := l.WithCaller(3)
+	body, _ := json.Marshal(ll.JSONFormat(level, message))
 	content := string(body)
 	switch level {
-	case LevelDebug:
-		l.newLogger.Print(content)
-	case LevelInfo:
-		l.newLogger.Print(content)
-	case LevelWarn:
-		l.newLogger.Print(content)
-	case LevelError:
-		l.newLogger.Print(content)
+	case LevelDebug, LevelInfo, LevelWarn, LevelError:
+		ll.newLogger.Print(content)
 	case LevelFatal:
-		l.newLogger.Fatal(content)
+		ll.newLogger.Fatal(content)
 	case LevelPanic:
-		l.newLogger.Panic(content)
+		ll.newLogger.Panic(content)
 	}
 }
 

@@ -109,6 +109,45 @@ func setupSetting() error {
 	if err != nil {
 		return err
 	}
+	// 下面是关于 s.ReadSection("Server", &global.ServerSetting)
+	// 第二个参数为什么要用 & 的笔记，在 playground 中运行
+	// package main
+
+	// import (
+	// 	"fmt"
+	// 	"reflect"
+	// )
+
+	// type S struct {
+	// 	A int
+	// 	B int
+	// }
+
+	// func main() {
+	// 	var s *S
+	// 	// s 是一个指向 S 结构体的空指针 nil
+	// 	fmt.Println(s) // <nil>
+	// 	refs := &s
+	// 	fmt.Println(refs) // 0xc0000b8018
+
+	// 	val := reflect.ValueOf(refs)
+
+	// 	fmt.Println("---- val ----")
+	// 	fmt.Println(val.Type())    // **main.S
+	// 	fmt.Println(val.CanAddr()) // false
+
+	// 	fmt.Println("---- val.Elem() ----")
+	// 	fmt.Println(val.Elem())           // <nil>
+	// 	fmt.Println(val.Elem().Type())    // *main.S
+	// 	fmt.Println(val.Elem().Kind())    // ptr
+	// 	fmt.Println(val.Elem().CanAddr()) // true
+
+	// 	fmt.Println("---- val.Elem().Elem() ----")
+	// 	fmt.Println(val.Elem().Elem()) //  <invalid reflect.Value>
+	// 	// 零值指针的 Elem 是无效的，不可以寻址
+	// 	// fmt.Println(val.Elem().Elem().Type()) // panic: reflect: call of reflect.Value.Type on zero Value
+	// 	fmt.Println(val.Elem().Elem().CanAddr()) // false
+	// }
 	err = s.ReadSection("Server", &global.ServerSetting)
 	if err != nil {
 		return err
@@ -145,13 +184,14 @@ func setupSetting() error {
 }
 
 func setupLogger() error {
-	fileName := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
+	fileName := global.AppSetting.LogSavePath + "/" +
+		global.AppSetting.LogFileName + global.AppSetting.LogFileExt
 	global.Logger = logger.NewLogger(&lumberjack.Logger{
 		Filename:  fileName,
 		MaxSize:   500,
 		MaxAge:    10,
 		LocalTime: true,
-	}, "", log.LstdFlags).WithCaller(2)
+	}, "", log.LstdFlags)
 
 	return nil
 }
@@ -159,6 +199,9 @@ func setupLogger() error {
 func setupDBEngine() error {
 	var err error
 	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	// 注意，不能使用 :=
+	// 因为它会重新声明并创建左侧的新的局部变量，因此其他包调用 global.DBEngine 时仍是 nil
+	// 应使用 = 赋值在 global 包中声明的全局变量中
 	if err != nil {
 		return err
 	}
