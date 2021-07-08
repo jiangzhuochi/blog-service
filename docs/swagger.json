@@ -1,11 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Go 编程之旅：一起用 Go 做项目",
+        "description": "Go 语言编程之旅：一起用 Go 做项目",
         "title": "博客系统",
         "termsOfService": "https://github.com/go-programming-tour-book",
         "contact": {},
-        "license": {},
         "version": "1.0"
     },
     "paths": {
@@ -558,24 +557,7 @@
             }
         },
         "errcode.Error": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "description": "错误码",
-                    "type": "integer"
-                },
-                "details": {
-                    "description": "详细信息",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "msg": {
-                    "description": "错误消息",
-                    "type": "string"
-                }
-            }
+            "type": "object"
         },
         "model.Article": {
             "type": "object",
@@ -628,7 +610,6 @@
                     }
                 },
                 "pager": {
-                    "type": "object",
                     "$ref": "#/definitions/app.Pager"
                 }
             }
@@ -675,7 +656,6 @@
                     }
                 },
                 "pager": {
-                    "type": "object",
                     "$ref": "#/definitions/app.Pager"
                 }
             }

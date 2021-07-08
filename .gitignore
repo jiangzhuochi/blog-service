@@ -1,3 +1,5 @@
 .idea/
 .DS_Store
 storage/*
+config.yaml
+config.go

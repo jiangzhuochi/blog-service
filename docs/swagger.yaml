@@ -12,18 +12,6 @@ definitions:
         type: integer
     type: object
   errcode.Error:
-    properties:
-      code:
-        description: 错误码
-        type: integer
-      details:
-        description: 详细信息
-        items:
-          type: string
-        type: array
-      msg:
-        description: 错误消息
-        type: string
     type: object
   model.Article:
     properties:
@@ -60,7 +48,6 @@ definitions:
         type: array
       pager:
         $ref: '#/definitions/app.Pager'
-        type: object
     type: object
   model.Tag:
     properties:
@@ -91,12 +78,10 @@ definitions:
         type: array
       pager:
         $ref: '#/definitions/app.Pager'
-        type: object
     type: object
 info:
   contact: {}
-  description: Go 编程之旅：一起用 Go 做项目
-  license: {}
+  description: Go 语言编程之旅：一起用 Go 做项目
   termsOfService: https://github.com/go-programming-tour-book
   title: 博客系统
   version: "1.0"
