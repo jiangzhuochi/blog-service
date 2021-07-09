@@ -3,7 +3,7 @@
 // // configs/config.yaml
 // // DO NOT EDIT!
 
-// package configs
+package configs
 
 // import (
 // 	"bytes"
@@ -234,4 +234,3 @@
 // 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 // 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 // }
-
