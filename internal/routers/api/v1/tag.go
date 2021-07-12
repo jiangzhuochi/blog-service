@@ -51,8 +51,10 @@ func (t Tag) List(c *gin.Context) {
 	}
 
 	response.ToResponseList(tags, totalRows)
-	return
 }
+
+// PowerShell 命令如下
+// Invoke-WebRequest -Method Get 'http://127.0.0.1:8000/api/v1/tags?page=1&page_size=2'
 
 // @Summary 新增标签
 // @Produce  json
@@ -82,8 +84,14 @@ func (t Tag) Create(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{})
-	return
 }
+
+// PowerShell 命令如下
+// $Body = @{
+//     name = 'Go'
+//     created_by = 'jzc'
+// }
+// Invoke-WebRequest -Method Post http://127.0.0.1:8000/api/v1/tags -Body $Body
 
 // @Summary 更新标签
 // @Produce  json
@@ -114,8 +122,17 @@ func (t Tag) Update(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{})
-	return
 }
+
+// PowerShell
+// $Body  = @{
+//     state = 0
+//     ModifiedBy = 'xxxxx'
+// }
+// Invoke-WebRequest -Method 'Put' 'http://127.0.0.1:8000/api/v1/tags/1' -Body $Body
+// 报错，读不到 Body 我也不知道为什么
+// 只能下 curl 7.77.0 for Windows
+// 使用书上的命令
 
 // @Summary 删除标签
 // @Produce  json
@@ -143,5 +160,7 @@ func (t Tag) Delete(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{})
-	return
 }
+
+// PowerShell 命令如下
+// Invoke-WebRequest -Method Delete 'http://127.0.0.1:8000/api/v1/tags/1'

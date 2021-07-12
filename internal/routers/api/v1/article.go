@@ -41,7 +41,6 @@ func (a Article) Get(c *gin.Context) {
 	}
 
 	response.ToResponse(article)
-	return
 }
 
 // @Summary 获取多个文章
@@ -75,7 +74,6 @@ func (a Article) List(c *gin.Context) {
 	}
 
 	response.ToResponseList(articles, totalRows)
-	return
 }
 
 // @Summary 创建文章
@@ -110,7 +108,6 @@ func (a Article) Create(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{})
-	return
 }
 
 // @Summary 更新文章
@@ -144,7 +141,6 @@ func (a Article) Update(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{})
-	return
 }
 
 // @Summary 删除文章
@@ -173,5 +169,4 @@ func (a Article) Delete(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{})
-	return
 }
