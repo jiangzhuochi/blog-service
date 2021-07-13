@@ -131,8 +131,8 @@ func (t Tag) Update(c *gin.Context) {
 // }
 // Invoke-WebRequest -Method 'Put' 'http://127.0.0.1:8000/api/v1/tags/1' -Body $Body
 // 报错，读不到 Body 我也不知道为什么
-// 只能下 curl 7.77.0 for Windows
-// 使用书上的命令
+// 补充，我的 PowerShell 版本是 5.1.19041.1023，可能升级到 7.1 有 -Form 命令不报错
+// 目前是下载了 curl 7.77.0 for Windows 使用书上的命令成功运行
 
 // @Summary 删除标签
 // @Produce  json
